@@ -1,35 +1,24 @@
 from flask import Flask
 from flask_cors import CORS
-from flask import request
-from controller.LunaController import LunaController
 
-app = Flask(__name__)
-CORS(app)
+from repository.core.ai.luna import Luna
 
-response_obj = {
-    "code": 0,
-    "message": None
-}
+# Loading Luna AI
+luna = Luna()
 
 
-@app.route("/")
-def index():
-    return "Hello world"
+def create_app():
+    # Starting Flask app
+    flask_app = Flask(__name__)
+    # Adding cors validation for external api calls
+    CORS(flask_app)
+
+    from controller.routes.luna_routes_controller import luna_routes_controller_bp
+    flask_app.register_blueprint(luna_routes_controller_bp)
+
+    return flask_app
 
 
-@app.route("/prediction", methods=["GET"])
-def prediction():
-
-    lunaController = LunaController()
-    result = lunaController.predict(request.values)
-
-    if (result):
-        response_obj["code"] = 200
-        response_obj["message"] = result
-        print(response_obj)
-        return response_obj
-
-    response_obj["code"] = 500
-    response_obj["message"] = "Sorry, something bad happened with the server"
-
-    return response_obj
+if __name__ == "__main__":
+    app = create_app()
+    app.run(debug=True)

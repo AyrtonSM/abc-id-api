@@ -1,0 +1,12 @@
+.venv
+.idea
+controller/__pycache__
+controller/routes/__pycache__
+domain/__pycache__
+repository/__pycache__
+repository/core/__pycache__
+repository/core/ai/__pycache__
+repository/core/data/__pycache__
+service/__pycache__
+tests/__pycache__
+utils/__pycache__
