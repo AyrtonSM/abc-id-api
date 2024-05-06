@@ -2,6 +2,7 @@ from utils.response_http_code import ResponseHttpCode
 from flask import Blueprint, request, Response
 from controller.luna_controller import LunaController
 import logging as logger
+import json
 
 luna_routes_controller_bp = Blueprint('luna_routes_controller', __name__)
 
@@ -35,7 +36,7 @@ class LunaRoutesController:
         else:
             message = f"Dear Physician, this person contains ::: {percentage:.2f}% of chance of containing a breast cancer."
 
-        response.data = str({"message": message})
+        response.data = json.dumps({"message": message})
         response.status_code = 200
 
         return response
